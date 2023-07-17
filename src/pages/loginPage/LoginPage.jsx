@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
 
-const LOGIN_URL = "http://localhost:7000/api/users/authenticate";
+const LOGIN_URL = "http://localhost:7000/api/users";
 
 const LoginPage = () => {
-  const initialValues = { userName: "", password: "" };
+  const initialValues = { user_name: "", password: "" };
   const [values, handleChange, resetForm] = useForm(initialValues);
 
   const [isSender, setisSender] = useState(true);
@@ -18,8 +18,8 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const handleRedirect = (path, _data) => {
-    navigate(path, _data);
+  const handleRedirect = (path) => {
+    navigate(path);
   };
 
   const [errMsg, setErrMsg] = useState("");
@@ -39,70 +39,81 @@ const LoginPage = () => {
     // isSender ? handleRedirect('/DashBoardPage') : handleRedirect('/ToDoPage')
 
     try {
-      await apiServices.sendRequest(LOGIN_URL, values).then(async (response) => {
-        const res = await response.json();
-        try {
-          const accessToken = res.data.token;
-          const userId = res.data.id;
+      const response =  await apiServices.authUser(values)
+      const userPrivileges = await response.data.privilege;
+
+      console.log("response are ",response)
+      
+      // (async (response) => {
+
+  
+      if (response.data.id > 0) {
+        setErrMsg("There is No response from the Server");
+      } else if (response.status === 400) {
+        setErrMsg("Missing User name or Password");
+      } else if (response.status === 401) {
+        setErrMsg(response.message);
+        alert(response.message);
+      }  else if (response.status == 200 && response.data.states == "active" && JSON.stringify(userPrivileges) == "sender") {
+            
+            // const userData = {
+            //   id: response.data.id,
+            //   privilege: userPrivileges,
+            //   addresponses: response.data.addresponses,
+            //   user_mail: response.data.user_mail,
+            //   token: response.data.token,
+            //   userLogedIn: true,
+            // };
+            handleRedirect("/DashBoardPage")
+            console.log("sender test passed")
+  
+            // switch (userPrivileges) {
+            //   case "sender":
+            //     handleRedirect("/DashBoardPage")
+            //     // navigate("/DashBoardPage", {
+            //     //   state: userData,
+            //     //   replace: true,
+            //     // });
+            //     setUserLogedIn(true);
+            //     localStorage.setItem("userData", JSON.stringify(userData));
+            //     break;
+            //   case "biker":
+            //     handleRedirect("/ToDoPage")
+            //     // navigate("/ToDoPage", {
+            //     //   state: userData,
+            //     //   replace: true,
+            //     // });
+            //     setUserLogedIn(true);
+            //     localStorage.setItem("userData", JSON.stringify(userData));
+            //     break;
+            //   default:
+            //     navigate("/", { replace: true });
+            // }
+  
+            console.log(
+              "userData item was set in the browser storage ...",
+              localStorage
+            );
+            const useridStorage = localStorage.getItem("userData");
+          } else {
+            setErrMsg("Login Failed");
+          }
+        // });
+
+
+         
+          const accessToken = response.data.token;
+          const userId = response.data.id;
           console.log(accessToken);
-          const userPrivileges = res.data.privileges;
-          console.log("userPriviliedges : ", userPrivileges);
+          // const userPrivileges = await response.data.privilege;
+          console.log("userPriviliedges : ", JSON.stringify(userPrivileges));
         } catch (err) {
           console.log(err);
+  
         }
 
      
-        if (!response) {
-          setErrMsg("There is No Response from the Server");
-        } else if (response.status === 400) {
-          setErrMsg("Missing Username or Password");
-        } else if (response.status === 401) {
-          setErrMsg(res.message);
-          alert(res.message);
-        } else if (response.status === 200 && res.data.states === "active") {
-          const userData = {
-            id: res.data.id,
-            privilege: res.data.privilege,
-            address: res.data.address,
-            user_mail: res.data.user_mail,
-            token: res.data.token,
-            userLogedIn: true,
-          };
-          switch (res.data.privilege) {
-            case "sender":
-              navigate("/DashBoardPage", {
-                state: userData,
-                replace: true,
-              });
-              setUserLogedIn(true);
-              localStorage.setItem("userData", JSON.stringify(userData));
-              break;
-            case "biker":
-              navigate("/ToDoPage", {
-                state: userData,
-                replace: true,
-              });
-              setUserLogedIn(true);
-              localStorage.setItem("userData", JSON.stringify(userData));
-              break;
-            default:
-              navigate("/", { replace: true });
-          }
-
-          console.log(
-            "userData item was set in the browser storage ...",
-            localStorage
-          );
-          const useridStorage = localStorage.getItem("userData");
-        } else {
-          setErrMsg("Login Failed");
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      resetForm();
-    }
+         
   };
 
   return (
@@ -132,9 +143,9 @@ const LoginPage = () => {
         <br></br>
         <input
           type="text"
-          name="userName"
+          name="user_name"
           placeholder="User Name"
-          value={values.userName}
+          value={values.user_name}
           onChange={handleChange}
           style={{
             padding: "10px",

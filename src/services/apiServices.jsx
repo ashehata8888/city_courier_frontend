@@ -1,4 +1,4 @@
-// const API_URL = 'http:7000/api/users'
+const API_URL = 'http://localhost:7000/api/users/authenticate'
 
 async function sendRequest(url,options) {
  const response = await fetch(url,options);
@@ -20,6 +20,12 @@ async function fetchUsers(API_URL) {
  return await sendRequest(API_URL);
 }
 
+async function authUser(userCredentials){
+  const options = createRequestOptions('POST',userCredentials);
+  return await sendRequest(API_URL, options);
+ }
+
+
 async function createUser(user , API_URL) {
  const options = createRequestOptions('POST',user);
  return await sendRequest(API_URL, options);
@@ -40,7 +46,7 @@ fetchUsers,
 createUser,
 updateUser,
 deleteUser,
-sendRequest
+authUser
 }
 
 
