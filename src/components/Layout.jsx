@@ -4,7 +4,7 @@ import Navbar from './NavBar/NavBar';
 import {useState} from "react"
 
 function Layout({ children }) {
-    const [userLogdIn,setUserLogedIn]=useState(true)
+    const [userLogdIn,setUserLogedIn]=useState(false)
   return (
     <div>
       <header>
