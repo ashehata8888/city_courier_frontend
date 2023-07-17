@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
 
-const LOGIN_URL = "localhost:7000/api/users/authenticate";
+const LOGIN_URL = "http://localhost:7000/api/users/authenticate";
 
 const LoginPage = () => {
   const initialValues = { userName: "", password: "" };
