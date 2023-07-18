@@ -18,8 +18,10 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const handleRedirect = (path) => {
-    navigate(path);
+  const handleRedirect = (path, userData) => {
+    console.log("userData from LoginPage:", userData);
+
+    navigate(path, { state: userData });
   };
 
   const [errMsg, setErrMsg] = useState("");
@@ -39,81 +41,51 @@ const LoginPage = () => {
     // isSender ? handleRedirect('/DashBoardPage') : handleRedirect('/ToDoPage')
 
     try {
-      const response =  await apiServices.authUser(values)
+      const response = await apiServices.authUser(values);
       const userPrivileges = await response.data.privilege;
 
-      console.log("response are ",response)
-      
       // (async (response) => {
 
-  
-      if (response.data.id > 0) {
-        setErrMsg("There is No response from the Server");
-      } else if (response.status === 400) {
-        setErrMsg("Missing User name or Password");
-      } else if (response.status === 401) {
-        setErrMsg(response.message);
-        alert(response.message);
-      }  else if (response.status == 200 && response.data.states == "active" && JSON.stringify(userPrivileges) == "sender") {
-            
-            // const userData = {
-            //   id: response.data.id,
-            //   privilege: userPrivileges,
-            //   addresponses: response.data.addresponses,
-            //   user_mail: response.data.user_mail,
-            //   token: response.data.token,
-            //   userLogedIn: true,
-            // };
-            handleRedirect("/DashBoardPage")
-            console.log("sender test passed")
-  
-            // switch (userPrivileges) {
-            //   case "sender":
-            //     handleRedirect("/DashBoardPage")
-            //     // navigate("/DashBoardPage", {
-            //     //   state: userData,
-            //     //   replace: true,
-            //     // });
-            //     setUserLogedIn(true);
-            //     localStorage.setItem("userData", JSON.stringify(userData));
-            //     break;
-            //   case "biker":
-            //     handleRedirect("/ToDoPage")
-            //     // navigate("/ToDoPage", {
-            //     //   state: userData,
-            //     //   replace: true,
-            //     // });
-            //     setUserLogedIn(true);
-            //     localStorage.setItem("userData", JSON.stringify(userData));
-            //     break;
-            //   default:
-            //     navigate("/", { replace: true });
-            // }
-  
-            console.log(
-              "userData item was set in the browser storage ...",
-              localStorage
-            );
-            const useridStorage = localStorage.getItem("userData");
-          } else {
-            setErrMsg("Login Failed");
-          }
-        // });
+      if (parseInt(response.data.id) < 1) {
+        setErrMsg("Login Failed");
+      } else if (
+        parseInt(response.data.id) > 0 &&
+        response.data.status == "active"
+      ) {
+        const userData = {
+          id: response.data.id,
+          privilege: userPrivileges,
+          addresponses: response.data.addresponses,
+          user_mail: response.data.user_mail,
+          token: response.data.token,
+          userLogedIn: true,
+        };
 
+        localStorage.setItem("userData", JSON.stringify(userData));
 
-         
-          const accessToken = response.data.token;
-          const userId = response.data.id;
-          console.log(accessToken);
-          // const userPrivileges = await response.data.privilege;
-          console.log("userPriviliedges : ", JSON.stringify(userPrivileges));
-        } catch (err) {
-          console.log(err);
-  
-        }
+        handleRedirect(
+          userPrivileges == "sender" ? "/DashBoardPage" : "/ToDoPage",
+          userData
+        );
+        console.log("sender test passed");
 
-     
-         
+        console.log(
+          "userData item was set in the browser storage ...",
+          localStorage
+        );
+      } else {
+        setErrMsg("Login Failed");
+      }
+      // });
+
+      const accessToken = response.data.token;
+      const userId = response.data.id;
+      console.log(accessToken);
+      // const userPrivileges = await response.data.privilege;
+      console.log("userPriviliedges : ", JSON.stringify(userPrivileges));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
