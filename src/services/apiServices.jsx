@@ -1,11 +1,29 @@
+
+import AppContext from '../context/AppContext';
+import React,{ useContext} from 'react';
+
+
+
+
+
 const API_URL = 'http://localhost:7000/api/users/authenticate'
+const TRACKING_URL = "http://localhost:7000/api/tracking";
 
 async function sendRequest(url,options) {
  const response = await fetch(url,options);
  return await response.json();
 }
 
+
+const userData = localStorage.getItem("userData");
+const userDataJS = JSON.parse(userData)
+
+console.log("contextUserData from apiServices",userDataJS.token)
+
+
 function createRequestOptions(method, body) {
+
+
  return{
  method,
  headers: {
@@ -16,8 +34,28 @@ body: JSON.stringify(body),
 };
 }
 
-async function fetchUsers(API_URL) {
- return await sendRequest(API_URL);
+function createRequestOptionsJWT(method, body) {
+  return{
+  method,
+  headers: new Headers({
+    Authorization: "bearer " + userDataJS.token,
+    "Content-Type": 'application/json',
+  }),
+ withCredentials: true,
+ body: JSON.stringify(body),
+ };
+ }
+ 
+//  "Content-Type": "application/x-www-form-urlencoded",
+
+
+
+
+
+
+
+async function fetchUsers(url,options) {
+ return await sendRequest(url,options);
 }
 
 async function authUser(userCredentials){
@@ -26,26 +64,26 @@ async function authUser(userCredentials){
  }
 
 
-async function createUser(user , API_URL) {
- const options = createRequestOptions('POST',user);
- return await sendRequest(API_URL, options);
+async function create(user) {
+ const options = createRequestOptionsJWT('POST',user);
+ return await sendRequest(TRACKING_URL, options);
 }
 
-async function updateUser(userId, user , API_URL) {
- const options = createRequestOptions('PATCH',user);
+async function update(userId, user , API_URL) {
+ const options = createRequestOptionsJWT('PATCH',user);
  return await sendRequest (`${API_URL}/${userId}`, options);
 }
 
-async function deleteUser(userId , API_URL) {
- const options = createRequestOptions('DELETE');
+async function deleteAny(userId , API_URL) {
+ const options = createRequestOptionsJWT('DELETE');
  await sendRequest(`${API_URL}/${userId}`,options);
 }
 
 export default {
 fetchUsers,
-createUser,
-updateUser,
-deleteUser,
+create,
+update,
+deleteAny,
 authUser
 }
 

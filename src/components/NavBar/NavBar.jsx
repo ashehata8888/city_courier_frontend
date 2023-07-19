@@ -33,7 +33,7 @@ const Navbar = ({handleLogout,userDataPrivilege}) => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" style={{position:"fixed",width:"100%",zIndex:"100",marginTop:"0px",top:"60px"}}>
       <div className="container">
         <div className="menu-icon" onClick={handleShowNavbar}></div>
         <div className={`nav-elements  ${showNavbar && "active"}`}>

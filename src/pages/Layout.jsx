@@ -36,7 +36,7 @@ function Layout({ children , handleLogout  }) {
 
 
   return (
-    <div>
+   <>
       <header>
        <Header/>
       {/* { contextData?.userLogedIn && contextUserData != null &&  currUrl   ?  <Navbar handleLogout={handleLogout}/> : null} */}
@@ -47,7 +47,8 @@ function Layout({ children , handleLogout  }) {
       <footer>
         {/* Footer content */}
       </footer>
-    </div>
+   </>
+    
   );
 }
 
