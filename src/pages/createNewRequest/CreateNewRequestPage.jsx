@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../../components/NavBar/NavBar";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function CreateNewRequestPage() {
   const createFormContent = [
@@ -7,73 +8,57 @@ export default function CreateNewRequestPage() {
       label: "Sender Name",
       type: "text",
       name: "Sender Name",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Sender Phone",
       type: "text",
       name: "Sender Phone",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Sender Adress",
       type: "text",
       name: "Sender Adress",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Receiver Name",
       type: "text",
       name: "Receiver Name",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Receiver Adress",
       type: "text",
       name: "Receiver Adress",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Parcel Quantity",
       type: "text",
       name: "Parcel Quantity",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark: text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Parcel Content",
       type: "text",
       name: "Parcel Content",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark: text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
     {
       label: "Parcel Wight",
       type: "text",
       name: "Parcel Wight",
-      labelClassName:
-        "block mb-2 text-sm font-medium text-gray-900 dark:text-white",
-      inputClassName:
-        "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+      labelClassName: "input-group-text mb-3 rounded",
+      inputClassName: " mb-3 mr-2 rounded ",
     },
   ];
 
@@ -82,16 +67,28 @@ export default function CreateNewRequestPage() {
   return (
     <>
       <Navbar userDataPrivilege={userDataPrivilege} />
-      <h1 className="text-gray-500"> Create New Request Page</h1>
-      <form>
-        {createFormContent.map((input) => (
-          <div key={input.name} className="mb-12">
-            <label htmlFor={input.name} className={input.labelClassName}>{input.label}</label>
-            <input type={input.type} name={input.name} id={input.name} className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-          </div>
-        ))}
-        <button type="submit" className="className="bg-blue-500 text-white px-4 py-2 rounded-lg>Submit</button>
-      </form>
+      <h1 className="text-gray-500 m-4"> Create New Request Page</h1>
+      <div className="d-flex justify-content-center input-group-text" style={{maxWidth:"100vh", margin: "auto"}}>
+        <form className="input-group m-3">
+          {createFormContent.map((input) => (
+            <div key={input.name} className="input-group mb-3 w-50 ml-3">
+              <label htmlFor={input.name} className={input.labelClassName}>
+                {input.label}
+              </label>
+              <input
+                type={input.type}
+                name={input.name}
+                id={input.name}
+                className={input.inputClassName}
+              />
+              <br></br>
+            </div>
+          ))}
+          <button type="submit" className="btn btn-light rounded" style={{backgroundColor:"#fef7e5"}}>
+            Submit
+          </button>
+        </form>
+      </div>
     </>
   );
 }
