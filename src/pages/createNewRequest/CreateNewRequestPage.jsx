@@ -72,8 +72,13 @@ export default function CreateNewRequestPage() {
     },
   ];
 
-  const userDataPrivilege = "sender";
 
+  const userDataPrivilege = "sender";
+  const userData = localStorage.getItem("userData");
+const userDataJS = JSON.parse(userData);
+
+
+console.log("testUserId",userDataJS.id)
   const initialValues = {
     sender_name:"",
     sender_phone:"",
@@ -85,8 +90,8 @@ export default function CreateNewRequestPage() {
     parcel_content:"",
     parcel_wight:0,
     parcel_status:"pending",
-    action_by:"pending"
-
+    action_by:"pending",
+    user_id:userDataJS.id
   }
 
   const valuesHard = {
@@ -100,6 +105,7 @@ export default function CreateNewRequestPage() {
     Parcel_Wight:5,
     parcel_status:"pending",
     action_by:"pending"
+   
 
   }
 

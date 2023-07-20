@@ -13,13 +13,17 @@ export default function DashBoardPage() {
 
   const userDataPrivilege = "sender";
 
- 
   useEffect(() => {
+    const userData = localStorage.getItem("userData");
+    const userDataJS = JSON.parse(userData);
+
     const TRACKING_URL = "http://localhost:7000/api/tracking";
 
     const fetchTrackingData = async () => {
       try {
-        const response = await apiServices.fetchData(TRACKING_URL);
+        // const response = await apiServices.fetchData(TRACKING_URL);
+        const response = await apiServices.fetchDataById(TRACKING_URL,userDataJS.id);
+
         console.log("test Tracking data from Dashboard", response);
 
         setTrackingData(response);
@@ -48,16 +52,18 @@ export default function DashBoardPage() {
         </MDBTableHead>
         <MDBTableBody>
           {console.log("trackingDataTest", trackingData)}
-          {trackingData.length === 0 ? (
-  <tr>
-    <td colSpan="4">Loading...</td>
-  </tr>
-) : (trackingData.map((item) => {
-            console.log("item",item)
-            return (
-            
+          {trackingData?.length === 0 ? (
+            <tr>
+              <td colSpan="4">Loading...</td>
+            </tr>
+          ) : (
+            trackingData?.map((item) => {
+              console.log("item", item);
+              return (
                 <tr key={item.id}>
-                  <th scope="row" style={{color:"red"}}><h3>{item.id}</h3></th>
+                  <th scope="row" style={{ color: "red" }}>
+                    <h3>{item.id}</h3>
+                  </th>
                   <td>{item.parcel_content}</td>
                   <td>
                     <ProgressBar
@@ -68,9 +74,9 @@ export default function DashBoardPage() {
                   </td>
                   <td>{item.picked_up_time}</td>
                 </tr>
-           
-            );
-          }))}
+              );
+            })
+          )}
         </MDBTableBody>
         {/* <tfoot>
         <tr>

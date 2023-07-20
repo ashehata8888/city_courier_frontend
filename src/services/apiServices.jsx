@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 const API_URL = "http://localhost:7000/api/users/authenticate";
 const TRACKING_URL = "http://localhost:7000/api/tracking";
 
+
 function createRequestOptionsJWT(method, body) {
   return {
     method,
@@ -65,8 +66,8 @@ async function create(user) {
   return await sendRequest(TRACKING_URL, options);
 }
 
-async function update(userId, user, API_URL) {
-  const options = createRequestOptionsJWT("PATCH", user);
+async function update(API_URL,userId, body ) {
+  const options = createRequestOptionsJWT("PATCH", body);
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
 
@@ -75,8 +76,15 @@ async function deleteAny(userId, API_URL) {
   await sendRequest(`${API_URL}/${userId}`, options);
 }
 
+
+async function fetchDataById(API_URL,userId) {
+  const options = fetchOptionsWithoutBody("GET");
+  return await sendRequest(`${API_URL}/${userId}`, options);
+}
+
 export default {
   fetchData,
+  fetchDataById,
   create,
   update,
   deleteAny,
