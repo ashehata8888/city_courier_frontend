@@ -56,6 +56,7 @@ const LoginPage = () => {
           id: response.data.id,
           privilege: userPrivileges,
           addresponses: response.data.addresponses,
+          user_name:response.data.user_name,
           user_mail: response.data.user_mail,
           token: response.data.token,
           userLogedIn: true,

@@ -119,6 +119,7 @@ export default function TodoPage() {
                       trackingId={item.id}
                       btnName={pickUpBtn}
                       value={pickedUp[index]}
+                      parcel_status={item.parcel_status}
                       onChange={(e) => setPickedUp((prevState) => {
                         const newState = [...prevState];
                         newState[index] = e.target.value;
@@ -132,6 +133,7 @@ export default function TodoPage() {
                       trackingId={item.id}
                       btnName={deliveriedBtn}
                       value={delivery[index]}
+                      parcel_status={item.parcel_status}
                       onChange={(e) => setDelivery((prevState) => {
                         const newState = [...prevState];
                         newState[index] = e.target.value;
