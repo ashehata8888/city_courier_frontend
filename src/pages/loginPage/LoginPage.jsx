@@ -95,7 +95,7 @@ const LoginPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "89vh",
+        height: "100vh",
         background: "#f5f5f5",
         flexDirection: "column",
       }}
