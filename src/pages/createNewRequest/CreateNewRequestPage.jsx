@@ -147,6 +147,7 @@ console.log("testUserId",userDataJS.id)
                 {input.label}
               </label>
               <input
+              required
                 type={input.type}
                 name={input.name}
                 id={input.name}
