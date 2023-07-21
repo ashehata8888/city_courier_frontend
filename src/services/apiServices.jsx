@@ -36,7 +36,7 @@ async function sendRequest(url, options) {
 const userData = localStorage.getItem("userData");
 const userDataJS = JSON.parse(userData);
 
-console.log("contextUserData from apiServices", userDataJS.token);
+// console.log("contextUserData from apiServices", userDataJS.token);
 
 function createRequestOptions(method, body) {
   return {
