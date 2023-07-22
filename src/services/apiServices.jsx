@@ -14,6 +14,7 @@ function createRequestOptionsJWT(method, body) {
       "Content-Type": "application/json",
     }),
     withCredentials: true,
+    mode: 'no-cors',
     body: JSON.stringify(body),
   };
 }
@@ -26,6 +27,7 @@ function fetchOptionsWithoutBody(method) {
       "Content-Type": "application/json",
     }),
     withCredentials: true,
+    mode: 'no-cors'
   };
 }
 
