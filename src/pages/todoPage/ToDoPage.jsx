@@ -8,15 +8,14 @@ import useInput from "../../hooks/useInput";
 import InputWithButton from "../../components/InputWithButton/InputWithButton";
 
 export default function TodoPage() {
-
   const location = useLocation();
   // const [data, setData] = useState([]);
   const [trackingData, setTrackingData] = useState([]);
   // const [pickedUp, setPickedUp] = useState("");
   // const [delivery, setDelivery] = useState("");
 
-  const [pickedUp, setPickedUp] = useState(trackingData.map(() => ''));
-  const [delivery, setDelivery] = useState(trackingData.map(() => ''));
+  const [pickedUp, setPickedUp] = useState(trackingData.map(() => ""));
+  const [delivery, setDelivery] = useState(trackingData.map(() => ""));
 
   const userDataPrivilege = "biker";
 
@@ -30,11 +29,11 @@ export default function TodoPage() {
   const [values, handleChange, resetForm] = useForm(initialValues);
 
   useEffect(() => {
-
     const userData = localStorage.getItem("userData");
     const userDataJS = JSON.parse(userData);
 
-    const TRACKING_URL = "http://localhost:7000/api/tracking";
+    const TRACKING_URL =
+      "https://city-courier-webservices.onrender.com/api/tracking";
 
     const fetchTrackingData = async () => {
       try {
@@ -52,14 +51,9 @@ export default function TodoPage() {
     fetchTrackingData();
   }, []);
 
-
-
   const handlePostData = (index) => {
     // Replace this function with your logic to make the POST request using 'inputStates[index].input1[0]' and 'inputStates[index].input2[0]'
-   
   };
-
-
 
   const pickUpBtn = "Picked Up";
   const deliveriedBtn = "Deliveried";
@@ -97,7 +91,7 @@ export default function TodoPage() {
               <td colSpan="4">Loading...</td>
             </tr>
           ) : (
-            trackingData?.map((item,index) => {
+            trackingData?.map((item, index) => {
               console.log("item", item);
               return (
                 <tr key={item.id}>
@@ -115,30 +109,34 @@ export default function TodoPage() {
                   <td>{item.action_by}</td>
 
                   <td>
-                  <InputWithButton
+                    <InputWithButton
                       trackingId={item.id}
                       btnName={pickUpBtn}
                       value={pickedUp[index]}
                       parcel_status={item.parcel_status}
-                      onChange={(e) => setPickedUp((prevState) => {
-                        const newState = [...prevState];
-                        newState[index] = e.target.value;
-                        return newState;
-                      })}
+                      onChange={(e) =>
+                        setPickedUp((prevState) => {
+                          const newState = [...prevState];
+                          newState[index] = e.target.value;
+                          return newState;
+                        })
+                      }
                     />
                   </td>
 
                   <td>
-                  <InputWithButton
+                    <InputWithButton
                       trackingId={item.id}
                       btnName={deliveriedBtn}
                       value={delivery[index]}
                       parcel_status={item.parcel_status}
-                      onChange={(e) => setDelivery((prevState) => {
-                        const newState = [...prevState];
-                        newState[index] = e.target.value;
-                        return newState;
-                      })}
+                      onChange={(e) =>
+                        setDelivery((prevState) => {
+                          const newState = [...prevState];
+                          newState[index] = e.target.value;
+                          return newState;
+                        })
+                      }
                     />
                   </td>
                 </tr>

@@ -1,9 +1,8 @@
 import React from "react";
 import Navbar from "../../components/NavBar/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import useForm from '../../hooks/useForm'
+import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
-
 
 export default function CreateNewRequestPage() {
   const createFormContent = [
@@ -72,102 +71,123 @@ export default function CreateNewRequestPage() {
     },
   ];
 
-
   const userDataPrivilege = "sender";
   const userData = localStorage.getItem("userData");
-const userDataJS = JSON.parse(userData);
+  const userDataJS = JSON.parse(userData);
 
-
-console.log("testUserId",userDataJS.id)
+  console.log("testUserId", userDataJS.id);
   const initialValues = {
-    sender_name:"",
-    sender_phone:"",
-    sender_adress:"",
-    receiver_name:"",
-    receiver_adress:"",
-    receiver_phone:"",
-    parcel_qt:0,
-    parcel_content:"",
-    parcel_wight:0,
-    parcel_status:"pending",
-    action_by:"pending",
-    user_id:userDataJS.id
-  }
+    sender_name: "",
+    sender_phone: "",
+    sender_adress: "",
+    receiver_name: "",
+    receiver_adress: "",
+    receiver_phone: "",
+    parcel_qt: 0,
+    parcel_content: "",
+    parcel_wight: 0,
+    parcel_status: "pending",
+    action_by: "pending",
+    user_id: userDataJS.id,
+  };
 
   const valuesHard = {
-    sender_name:"Mansor",
-    Sender_Phone:"01254889965",
-    Sender_Adress:"Cairo",
-    Receiver_Name:"Ibrahim",
-    Receiver_Adress:"Giza",
-    Parcel_Quantity:2,
-    Parcel_Content:"somethings",
-    Parcel_Wight:5,
-    parcel_status:"pending",
-    action_by:"pending"
-   
+    sender_name: "Mansor",
+    Sender_Phone: "01254889965",
+    Sender_Adress: "Cairo",
+    Receiver_Name: "Ibrahim",
+    Receiver_Adress: "Giza",
+    Parcel_Quantity: 2,
+    Parcel_Content: "somethings",
+    Parcel_Wight: 5,
+    parcel_status: "pending",
+    action_by: "pending",
+  };
 
-  }
+  const TRACKING_URL =
+    "https://city-courier-webservices.onrender.com/api/tracking";
 
-
-  const TRACKING_URL = "http://localhost:7000/api/tracking";
-
-  const [ values, handleChange, resetForm] = useForm(initialValues)
+  const [values, handleChange, resetForm] = useForm(initialValues);
 
   const handelSubmit = async (event) => {
     event.preventDefault();
 
-   try { 
+    try {
+      console.log("testValues", values);
 
-    console.log("testValues",values)
-  
+      // await apiServices.create(values);
+      await apiServices.create(values);
 
-    // await apiServices.create(values);
-     await apiServices.create(values)
-
-
-  //  resetForm();
-   } catch (error) {
-   console.error(error);
-   }
-   }
- 
-
-  
+      //  resetForm();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <Navbar userDataPrivilege={userDataPrivilege} />
       {/* <h1 className="text-gray-500 m-4" style={{marginBottom:"2%"}}> Create New Request Page</h1> */}
-      <div className="d-flex justify-content-center input-group-text" style={{maxWidth:"90vh", margin: "auto",paddingLeft:"2.2rem",marginTop:"10%"}}>
-        <form className="input-group m-2" style={{margin:"auto"}} onSubmit={handelSubmit}>
+      <div
+        className="d-flex justify-content-center input-group-text"
+        style={{
+          maxWidth: "90vh",
+          margin: "auto",
+          paddingLeft: "2.2rem",
+          marginTop: "10%",
+        }}
+      >
+        <form
+          className="input-group m-2"
+          style={{ margin: "auto" }}
+          onSubmit={handelSubmit}
+        >
           {createFormContent.map((input) => (
             <div key={input.name} className="input-group mb-3 w-50">
               <label htmlFor={input.name} className={input.labelClassName}>
                 {input.label}
               </label>
               <input
-              required
+                required
                 type={input.type}
                 name={input.name}
                 id={input.name}
                 className={input.inputClassName}
-                value={input.name == "sender_name" ? values.sender_name :
-                       input.name == "sender_phone" ? values.sender_phone :
-                       input.name == "sender_adress" ? values.sender_adress :
-                       input.name == "receiver_name" ? values.receiver_name : 
-                       input.name == "receiver_phone" ? values.receiver_phone : 
-                       input.name == "receiver_adress" ? values.receiver_adress :
-                       input.name == "parcel_qt" ? values.parcel_qt : 
-                       input.name == "parcel_content" ? values.parcel_content : 
-                       input.name == "parcel_wight" ? values.parcel_wight : null
-              }
+                value={
+                  input.name == "sender_name"
+                    ? values.sender_name
+                    : input.name == "sender_phone"
+                    ? values.sender_phone
+                    : input.name == "sender_adress"
+                    ? values.sender_adress
+                    : input.name == "receiver_name"
+                    ? values.receiver_name
+                    : input.name == "receiver_phone"
+                    ? values.receiver_phone
+                    : input.name == "receiver_adress"
+                    ? values.receiver_adress
+                    : input.name == "parcel_qt"
+                    ? values.parcel_qt
+                    : input.name == "parcel_content"
+                    ? values.parcel_content
+                    : input.name == "parcel_wight"
+                    ? values.parcel_wight
+                    : null
+                }
                 onChange={handleChange}
               />
               <br></br>
             </div>
           ))}
-          <button type="submit" className="btn btn-light rounded" style={{backgroundColor:"#fef7e5",height:"40px",marginTop:"9%"}}>
+          <button
+            type="submit"
+            className="btn btn-light rounded"
+            style={{
+              backgroundColor: "#fef7e5",
+              height: "40px",
+              marginTop: "9%",
+            }}
+          >
             Submit
           </button>
         </form>

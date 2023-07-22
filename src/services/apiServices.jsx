@@ -1,9 +1,10 @@
 import AppContext from "../context/AppContext";
 import React, { useContext } from "react";
 
-const API_URL = "http://localhost:7000/api/users/authenticate";
-const TRACKING_URL = "http://localhost:7000/api/tracking";
-
+const API_URL =
+  "https://city-courier-webservices.onrender.com/api/users/authenticate";
+const TRACKING_URL =
+  "https://city-courier-webservices.onrender.com/api/tracking";
 
 function createRequestOptionsJWT(method, body) {
   return {
@@ -52,7 +53,7 @@ function createRequestOptions(method, body) {
 //  "Content-Type": "application/x-www-form-urlencoded",
 
 async function fetchData(url) {
-  const options = fetchOptionsWithoutBody("GET")
+  const options = fetchOptionsWithoutBody("GET");
   return await sendRequest(url, options);
 }
 
@@ -66,7 +67,7 @@ async function create(user) {
   return await sendRequest(TRACKING_URL, options);
 }
 
-async function update(API_URL,userId, body ) {
+async function update(API_URL, userId, body) {
   const options = createRequestOptionsJWT("PATCH", body);
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
@@ -76,8 +77,7 @@ async function deleteAny(userId, API_URL) {
   await sendRequest(`${API_URL}/${userId}`, options);
 }
 
-
-async function fetchDataById(API_URL,userId) {
+async function fetchDataById(API_URL, userId) {
   const options = fetchOptionsWithoutBody("GET");
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
