@@ -16,43 +16,53 @@ import AppContext from './context/AppContext';
 
 function App() {
 
-  const [contextUserData, setContextUserData] = useState(null);
+  const [contextUserData, setContextUserData] = useState([]);
 
-  useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
-    setContextUserData(storedUserData);
-  }, []);
+  // useEffect(() => {
+  //   const storedUserData = localStorage.getItem("userData");
+  //   setContextUserData(storedUserData);
+  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("userData");
-    setContextUserData(null);
+    setContextUserData([]);
     // localStorage.clear()
   };
+
+useEffect(()=>{
+
+setTimeout(()=>console.log("contextUserDataTest fromApp : ",contextUserData),1000)
+
+},[])
+  
 
 
   return (
 
-    <AppContext.Provider value={contextUserData}>
-    <Router>
-    <Layout handleLogout={handleLogout} >
-      <div className="App">
-      
-          <Routes>
-            <Route path="/" exact element={<LoginPage />} />
-            <Route path="/Home" element={<HomePage />} />
-            <Route path="/DashBoardPage" element={<DashBoardPage />} />
-            <Route
-              path="/CreateNewRequestPage"
-              element={<CreateNewRequestPage />}
-            />
-            <Route path="/ToDoPage" element={<ToDoPage />} />
-          </Routes>
-       
-      </div>
-    </Layout>
-    </Router>
-    </AppContext.Provider>
-  );
+
+<AppContext.Provider value={contextUserData}>
+
+<Router>
+<Layout handleLogout={handleLogout} >
+  <div className="App">
+  
+      <Routes>
+        <Route path="/" exact element={<LoginPage setContextUserData={setContextUserData} />} />
+        <Route path="/Home" element={<HomePage />} />
+        <Route path="/DashBoardPage" element={<DashBoardPage />} />
+        <Route
+          path="/CreateNewRequestPage"
+          element={<CreateNewRequestPage />}
+        />
+        <Route path="/ToDoPage" element={<ToDoPage />} />
+      </Routes>
+   
+  </div>
+</Layout>
+</Router>
+</AppContext.Provider>
+);
+
 }
 
 export default App;

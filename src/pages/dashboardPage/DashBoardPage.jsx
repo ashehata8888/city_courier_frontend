@@ -8,10 +8,12 @@ import apiServices from "../../services/apiServices";
 
 export default function DashBoardPage() {
   const [trackingData, setTrackingData] = useState([]);
-  const contextData = useContext(AppContext);
+  // const contextData = useContext(AppContext);
   console.log(contextData);
 
   const userDataPrivilege = "sender";
+
+  const contextData = JSON.parse(useContext(AppContext));
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,18 +24,22 @@ export default function DashBoardPage() {
   }, []);
 
   useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    const userDataJS = JSON.parse(userData);
+    // const userData = localStorage.getItem("userData");
+    // const userDataJS = JSON.parse(userData);
 
     const TRACKING_URL =
       "https://city-courier-webservices.onrender.com/api/tracking";
 
     const fetchTrackingData = async () => {
       try {
+
+
+        console.log("contextUserData from apiServices", contextData);
+       
         // const response = await apiServices.fetchData(TRACKING_URL);
         const response = await apiServices.fetchDataById(
           TRACKING_URL,
-          userDataJS.id
+          contextData.id
         );
 
         console.log("test Tracking data from Dashboard", response);

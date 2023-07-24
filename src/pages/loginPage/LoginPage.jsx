@@ -1,20 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
 
-const LOGIN_URL = "https://city-courier-webservices.onrender.com/api/users";
+// const LOGIN_URL = "https://city-courier-webservices.onrender.com/api/users";
 
-const LoginPage = () => {
+const LoginPage = ({setContextUserData}) => {
   const initialValues = { user_name: "", password: "" };
-  const [values, handleChange, resetForm] = useForm(initialValues);
+  const [values, handleChange,
+    //  resetForm
+    ] = useForm(initialValues);
 
   const [isSender, setisSender] = useState(true);
 
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
-  const [userLogdIn, setUserLogedIn] = useState(false);
+  // const [userLogdIn, setUserLogedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,6 +45,8 @@ const LoginPage = () => {
     try {
       const response = await apiServices.authUser(values);
       const userPrivileges = await response.data.privilege;
+
+      setContextUserData(response.data)
 
       // (async (response) => {
 

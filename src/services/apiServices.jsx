@@ -1,20 +1,36 @@
 import AppContext from "../context/AppContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 const API_URL =
   "https://city-courier-webservices.onrender.com/api/users/authenticate";
 const TRACKING_URL =
   "https://city-courier-webservices.onrender.com/api/tracking";
 
+export function FunctionComp (){
+
+    // const contextData = JSON.parse(useContext(AppContext));
+    const contextData = useContext(AppContext)
+
+    console.log("apiServicesContextData ",contextData)
+
+
+return <><div>test</div></>
+}
+
+
+
+  
+
+
 function createRequestOptionsJWT(method, body) {
+  
   return {
     method,
     headers: new Headers({
-      Authorization: "bearer " + userDataJS.token,
+      // Authorization: "bearer " + contextData.token,
       "Content-Type": "application/json",
     }),
     withCredentials: true,
-    mode: 'no-cors',
     body: JSON.stringify(body),
   };
 }
@@ -27,11 +43,11 @@ function fetchOptionsWithoutBody(method) {
       "Content-Type": "application/json",
     }),
     withCredentials: true,
-    mode: 'no-cors'
   };
 }
 
 async function sendRequest(url, options) {
+
   const response = await fetch(url, options);
   return await response.json();
 }
@@ -80,11 +96,14 @@ async function deleteAny(userId, API_URL) {
 }
 
 async function fetchDataById(API_URL, userId) {
+  // console.log("testContextfromApiServices",contextData)
   const options = fetchOptionsWithoutBody("GET");
+
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
 
 export default {
+  FunctionComp,
   fetchData,
   fetchDataById,
   create,

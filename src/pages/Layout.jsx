@@ -7,7 +7,7 @@ import Navbar from '../components/NavBar/NavBar';
 function Layout({ children , handleLogout  }) {
  
   const contextData = JSON.parse(useContext(AppContext));
-    console.log("contextData.userLogedIn",contextData)
+    console.log("contextDatafromLayout",contextData)
 
     const contextUserData = localStorage.getItem("userData");
 
@@ -18,7 +18,7 @@ function Layout({ children , handleLogout  }) {
   const [currUrl,setCurr]=useState(false)
 
     useEffect(
-      ()=>{
+      ()=>{ 
        console.log("contextData.userLogedIn",contextData?.userLogedIn)
        console.log("currnet url inclode DashBoardPage ",currentURL.includes('DashBoardPage'))
       
