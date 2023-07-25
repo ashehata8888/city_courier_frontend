@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
 
-// const LOGIN_URL = "https://city-courier-webservices.onrender.com/api/users";
+// const LOGIN_URL = "http://localhost:7000/api/users";
 
-const LoginPage = ({setContextUserData}) => {
+const LoginPage = ({ parentCallBack }) => {
   const initialValues = { user_name: "", password: "" };
   const [values, handleChange,
     //  resetForm
-    ] = useForm(initialValues);
+  ] = useForm(initialValues);
 
   const [isSender, setisSender] = useState(true);
 
@@ -46,7 +46,9 @@ const LoginPage = ({setContextUserData}) => {
       const response = await apiServices.authUser(values);
       const userPrivileges = await response.data.privilege;
 
-      setContextUserData(response.data)
+      setTimeout(() => { console.log("TestuserResposefromLoginPage", response) }, 1000)
+      parentCallBack(response.data)
+
 
       // (async (response) => {
 

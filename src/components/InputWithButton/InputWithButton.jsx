@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AppContext from "../../context/AppContext";
 import useInput from "../../hooks/useInput";
 import apiServices from "../../services/apiServices";
 
@@ -9,9 +10,22 @@ function InputWithButton({
   trackingId,
   parcel_status,
 }) {
+
+  const contextData = useContext(AppContext)
+
+  const [storedContextData, setStoredContextData] = useState(
+    JSON.parse(localStorage.getItem("userData")) ||
+     contextData
+  );
+  const token = storedContextData.token;
+
+
+
   const [inputValue, setInputValue] = useInput("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   console.log();
+
+
 
   const userData = localStorage.getItem("userData");
   const userDataJS = JSON.parse(userData);
@@ -27,35 +41,35 @@ function InputWithButton({
   const handlePatchData = async () => {
     const TRACKING_URL =
       btnName == "Picked Up"
-        ? "https://city-courier-webservices.onrender.com/api/tracking/pickedup"
+        ? "http://localhost:7000/api/tracking/pickedup"
         : btnName == "Deliveried"
-        ? "https://city-courier-webservices.onrender.com/api/tracking/deliveried"
-        : null;
-    // const modifiedData = {btnName == "Picked Up" ? "https://city-courier-webservices.onrender.com/api/tracking/picked" : btnName == "Deliveried" ? "https://city-courier-webservices.onrender.com/api/tracking/delivery" : null
+          ? "http://localhost:7000/api/tracking/deliveried"
+          : null;
+    // const modifiedData = {btnName == "Picked Up" ? "http://localhost:7000/api/tracking/picked" : btnName == "Deliveried" ? "http://localhost:7000/api/tracking/delivery" : null
 
     // }
-    console.log("testuserDataJS.user_name", userDataJS.user_name);
+    console.log("testuserDataJS.user_name", storedContextData.user_name);
     setIsSubmitted(true);
 
     const modifiedData =
       btnName == "Picked Up"
         ? {
-            id: trackingId,
-            picked_up_time: value,
-            parcel_status: "Picked Up",
-            action_by: userDataJS.user_name,
-          }
+          id: trackingId,
+          picked_up_time: value,
+          parcel_status: "Picked Up",
+          action_by: storedContextData.user_name,
+        }
         : btnName == "Deliveried"
-        ? {
+          ? {
             id: trackingId,
             delivery_time: value,
             parcel_status: "Deliveried",
-            action_by: userDataJS.user_name,
+            action_by: storedContextData.user_name,
           }
-        : null;
+          : null;
 
     try {
-      await apiServices.update(TRACKING_URL, trackingId, modifiedData);
+      await apiServices.update(TRACKING_URL, trackingId, modifiedData,token);
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +87,7 @@ function InputWithButton({
         type="text"
         value={value}
         onChange={onChange}
-        placeholder="Enter date and Time"
+        placeholder={ !isSubmitted ? "Enter date and Time" : " Done"}
       />
       <button
         disabled={isSubmitted}

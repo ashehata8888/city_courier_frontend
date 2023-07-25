@@ -12,11 +12,20 @@ export default function DashBoardPage() {
   // const contextData = JSON.parse(useContext(AppContext));
 
   const contextData = useContext(AppContext)
+  // const token = contextData.token
+
+  const [storedContextData, setStoredContextData] = useState(
+    JSON.parse(localStorage.getItem("userData")) ||
+     contextData
+  );
+  const token = storedContextData.token;
+
   // const contextData = useContext(AppContext);
-  console.log(contextData);
+  console.log("testToken",token);
 
   const userDataPrivilege = "sender";
 
+  JSON.parse(localStorage.getItem("contextData")) 
 
 
   useEffect(() => {
@@ -32,18 +41,19 @@ export default function DashBoardPage() {
     // const userDataJS = JSON.parse(userData);
 
     const TRACKING_URL =
-      "https://city-courier-webservices.onrender.com/api/tracking";
+      "http://localhost:7000/api/tracking";
 
     const fetchTrackingData = async () => {
       try {
 
 
         console.log("contextUserData from apiServices", contextData);
-       
+
         // const response = await apiServices.fetchData(TRACKING_URL);
         const response = await apiServices.fetchDataById(
           TRACKING_URL,
-          contextData.id
+          storedContextData.id,
+          token
         );
 
         console.log("test Tracking data from Dashboard", response);
@@ -54,7 +64,11 @@ export default function DashBoardPage() {
       }
     };
     fetchTrackingData();
-  }, []);
+  }, [storedContextData, token]);
+
+
+
+
 
   return (
     <>
@@ -95,16 +109,16 @@ export default function DashBoardPage() {
                         item.parcel_status == "Picked Up"
                           ? 50
                           : item.parcel_status == "Deliveried"
-                          ? 100
-                          : 0
+                            ? 100
+                            : 0
                       }
                       label={item.parcel_status}
                       variant={
                         item.parcel_status == "Picked Up"
                           ? "info"
                           : item.parcel_status == "succeDeliveriedss"
-                          ? "success"
-                          : 0
+                            ? "success"
+                            : 0
                       }
                       style={{
                         fontSize: "16px",
@@ -116,8 +130,8 @@ export default function DashBoardPage() {
                     {item.parcel_status == "Picked Up"
                       ? item.picked_up_time
                       : item.parcel_status == "Deliveried"
-                      ? item.delivery_time
-                      : "Pending"}
+                        ? item.delivery_time
+                        : "Pending"}
                   </td>
                 </tr>
               );

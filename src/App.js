@@ -16,7 +16,11 @@ import AppContext from './context/AppContext';
 
 function App() {
 
-  const [contextUserData, setContextUserData] = useState([]);
+  const [contextUserData, setContextUserData] = useState({});
+
+  const parentCallBack = (userData)=>{
+   setContextUserData(userData)
+  }
 
   // useEffect(() => {
   //   const storedUserData = localStorage.getItem("userData");
@@ -25,15 +29,16 @@ function App() {
 
   const handleLogout = () =>  {
     localStorage.removeItem("userData");
-    setContextUserData([]);
+    setContextUserData(null);
     // localStorage.clear()
   };
 
-useEffect(()=>{
+  console.log("contextUserDataTest fromApp : ", contextUserData)
+// useEffect(()=>{
 
-setTimeout(()=>console.log("contextUserDataTest fromApp : ",contextUserData),1000)
+// setTimeout(()=>console.log("contextUserDataTest fromApp : ",contextUserData),1000)
 
-},[contextUserData])
+// },[contextUserData])
   
 
 
@@ -47,7 +52,7 @@ setTimeout(()=>console.log("contextUserDataTest fromApp : ",contextUserData),100
   <div className="App">
   
       <Routes>
-        <Route path="/" exact element={<LoginPage setContextUserData={setContextUserData} />} />
+        <Route path="/" exact element={<LoginPage parentCallBack={parentCallBack} />} />
         <Route path="/Home" element={<HomePage />} />
         <Route path="/DashBoardPage" element={<DashBoardPage />} />
         <Route

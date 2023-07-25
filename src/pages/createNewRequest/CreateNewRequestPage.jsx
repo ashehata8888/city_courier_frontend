@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext,useState,useEffect } from 'react';
 import Navbar from "../../components/NavBar/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useForm from "../../hooks/useForm";
 import apiServices from "../../services/apiServices";
 
+import AppContext from '../../context/AppContext';
+
 export default function CreateNewRequestPage() {
+
+  const contextData = useContext(AppContext)
+  console.log("testcontextDataCreateNewReq",contextData)
+  // const token = contextData.token
+
+
+  const [storedContextData, setStoredContextData] = useState(
+    JSON.parse(localStorage.getItem("userData")) ||
+     contextData
+  );
+  const token = storedContextData.token;
+
+
   const createFormContent = [
     {
       label: "Sender Name",
@@ -105,7 +120,7 @@ export default function CreateNewRequestPage() {
   };
 
   const TRACKING_URL =
-    "https://city-courier-webservices.onrender.com/api/tracking";
+    "http://localhost:7000/api/tracking";
 
   const [values, handleChange, resetForm] = useForm(initialValues);
 
@@ -116,8 +131,8 @@ export default function CreateNewRequestPage() {
       console.log("testValues", values);
 
       // await apiServices.create(values);
-      await apiServices.create(values);
-
+      const createNewRequest = await apiServices.create(values,token);
+           console.log("test new Request : ",createNewRequest)
       //  resetForm();
     } catch (error) {
       console.error(error);
@@ -157,22 +172,22 @@ export default function CreateNewRequestPage() {
                   input.name == "sender_name"
                     ? values.sender_name
                     : input.name == "sender_phone"
-                    ? values.sender_phone
-                    : input.name == "sender_adress"
-                    ? values.sender_adress
-                    : input.name == "receiver_name"
-                    ? values.receiver_name
-                    : input.name == "receiver_phone"
-                    ? values.receiver_phone
-                    : input.name == "receiver_adress"
-                    ? values.receiver_adress
-                    : input.name == "parcel_qt"
-                    ? values.parcel_qt
-                    : input.name == "parcel_content"
-                    ? values.parcel_content
-                    : input.name == "parcel_wight"
-                    ? values.parcel_wight
-                    : null
+                      ? values.sender_phone
+                      : input.name == "sender_adress"
+                        ? values.sender_adress
+                        : input.name == "receiver_name"
+                          ? values.receiver_name
+                          : input.name == "receiver_phone"
+                            ? values.receiver_phone
+                            : input.name == "receiver_adress"
+                              ? values.receiver_adress
+                              : input.name == "parcel_qt"
+                                ? values.parcel_qt
+                                : input.name == "parcel_content"
+                                  ? values.parcel_content
+                                  : input.name == "parcel_wight"
+                                    ? values.parcel_wight
+                                    : null
                 }
                 onChange={handleChange}
               />

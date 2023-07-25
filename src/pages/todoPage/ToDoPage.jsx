@@ -6,8 +6,20 @@ import apiServices from "../../services/apiServices";
 import useForm from "../../hooks/useForm";
 import useInput from "../../hooks/useInput";
 import InputWithButton from "../../components/InputWithButton/InputWithButton";
+import AppContext from "../../context/AppContext";
 
 export default function TodoPage() {
+  const contextData = useContext(AppContext)
+
+  const [storedContextData, setStoredContextData] = useState(
+    JSON.parse(localStorage.getItem("userData")) ||
+     contextData
+  );
+  const token = storedContextData.token;
+
+
+  // const token = contextData.token
+
   const location = useLocation();
   // const [data, setData] = useState([]);
   const [trackingData, setTrackingData] = useState([]);
@@ -33,13 +45,13 @@ export default function TodoPage() {
     const userDataJS = JSON.parse(userData);
 
     const TRACKING_URL =
-      "https://city-courier-webservices.onrender.com/api/tracking";
+      "http://localhost:7000/api/tracking";
 
     const fetchTrackingData = async () => {
       try {
         // await apiServices.create(values)
 
-        const response = await apiServices.fetchData(TRACKING_URL);
+        const response = await apiServices.fetchData(TRACKING_URL,token);
 
         console.log("test Tracking data from Dashboard", response);
 
@@ -49,11 +61,9 @@ export default function TodoPage() {
       }
     };
     fetchTrackingData();
-  }, []);
+  },[storedContextData, token]);
 
-  const handlePostData = (index) => {
-    // Replace this function with your logic to make the POST request using 'inputStates[index].input1[0]' and 'inputStates[index].input2[0]'
-  };
+
 
   const pickUpBtn = "Picked Up";
   const deliveriedBtn = "Deliveried";
