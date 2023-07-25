@@ -15,7 +15,7 @@ function InputWithButton({
 
   const [storedContextData, setStoredContextData] = useState(
     JSON.parse(localStorage.getItem("userData")) ||
-     contextData
+    contextData
   );
   const token = storedContextData.token;
 
@@ -41,11 +41,11 @@ function InputWithButton({
   const handlePatchData = async () => {
     const TRACKING_URL =
       btnName == "Picked Up"
-        ? "http://localhost:7000/api/tracking/pickedup"
+        ? "https://city-courier-webservices.onrender.com/api/tracking/pickedup"
         : btnName == "Deliveried"
-          ? "http://localhost:7000/api/tracking/deliveried"
+          ? "https://city-courier-webservices.onrender.com/api/tracking/deliveried"
           : null;
-    // const modifiedData = {btnName == "Picked Up" ? "http://localhost:7000/api/tracking/picked" : btnName == "Deliveried" ? "http://localhost:7000/api/tracking/delivery" : null
+    // const modifiedData = {btnName == "Picked Up" ? "https://city-courier-webservices.onrender.com/api/tracking/picked" : btnName == "Deliveried" ? "https://city-courier-webservices.onrender.com/api/tracking/delivery" : null
 
     // }
     console.log("testuserDataJS.user_name", storedContextData.user_name);
@@ -69,7 +69,7 @@ function InputWithButton({
           : null;
 
     try {
-      await apiServices.update(TRACKING_URL, trackingId, modifiedData,token);
+      await apiServices.update(TRACKING_URL, trackingId, modifiedData, token);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +87,7 @@ function InputWithButton({
         type="text"
         value={value}
         onChange={onChange}
-        placeholder={ !isSubmitted ? "Enter date and Time" : " Done"}
+        placeholder={!isSubmitted ? "Enter date and Time" : " Done"}
       />
       <button
         disabled={isSubmitted}

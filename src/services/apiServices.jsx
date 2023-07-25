@@ -2,13 +2,13 @@ import AppContext from "../context/AppContext";
 import React, { useContext, useEffect } from "react";
 
 const API_URL =
-  "http://localhost:7000/api/users/authenticate";
+  "https://city-courier-webservices.onrender.com/api/users/authenticate";
 const TRACKING_URL =
-  "http://localhost:7000/api/tracking";
+  "https://city-courier-webservices.onrender.com/api/tracking";
 
 // export function FunctionComp() {
 
-  // const contextData = JSON.parse(useContext(AppContext));
+// const contextData = JSON.parse(useContext(AppContext));
 //   const contextData = useContext(AppContext)
 
 //   console.log("apiServicesContextData ", contextData)
@@ -22,7 +22,7 @@ const TRACKING_URL =
 
 
 
-function createRequestOptionsJWT(method, body ,token) {
+function createRequestOptionsJWT(method, body, token) {
 
   return {
     method,
@@ -35,7 +35,7 @@ function createRequestOptionsJWT(method, body ,token) {
   };
 }
 
-function fetchOptionsWithoutBody(method , token) {
+function fetchOptionsWithoutBody(method, token) {
   return {
     method,
     headers: new Headers({
@@ -70,8 +70,8 @@ function createRequestOptions(method, body) {
 
 //  "Content-Type": "application/x-www-form-urlencoded",
 
-async function fetchData(url,token) {
-  const options = fetchOptionsWithoutBody("GET",token);
+async function fetchData(url, token) {
+  const options = fetchOptionsWithoutBody("GET", token);
   return await sendRequest(url, options);
 }
 
@@ -80,24 +80,24 @@ async function authUser(userCredentials) {
   return await sendRequest(API_URL, options);
 }
 
-async function create(user,token) {
-  const options = createRequestOptionsJWT("POST", user,token);
+async function create(user, token) {
+  const options = createRequestOptionsJWT("POST", user, token);
   return await sendRequest(TRACKING_URL, options);
 }
 
-async function update(API_URL, userId, body,token) {
-  const options = createRequestOptionsJWT("PATCH", body,token);
+async function update(API_URL, userId, body, token) {
+  const options = createRequestOptionsJWT("PATCH", body, token);
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
 
-async function deleteAny(userId, API_URL,token) {
-  const options = createRequestOptionsJWT("DELETE",token);
+async function deleteAny(userId, API_URL, token) {
+  const options = createRequestOptionsJWT("DELETE", token);
   await sendRequest(`${API_URL}/${userId}`, options);
 }
 
-async function fetchDataById(API_URL, userId,token) {
+async function fetchDataById(API_URL, userId, token) {
   // console.log("testContextfromApiServices",contextData)
-  const options = fetchOptionsWithoutBody("GET",token);
+  const options = fetchOptionsWithoutBody("GET", token);
 
   return await sendRequest(`${API_URL}/${userId}`, options);
 }
