@@ -8,12 +8,16 @@ import apiServices from "../../services/apiServices";
 
 export default function DashBoardPage() {
   const [trackingData, setTrackingData] = useState([]);
+
+  // const contextData = JSON.parse(useContext(AppContext));
+
+  const contextData = useContext(AppContext)
   // const contextData = useContext(AppContext);
   console.log(contextData);
 
   const userDataPrivilege = "sender";
 
-  const contextData = JSON.parse(useContext(AppContext));
+
 
   useEffect(() => {
     const interval = setInterval(() => {

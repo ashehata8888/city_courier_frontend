@@ -23,7 +23,7 @@ function App() {
   //   setContextUserData(storedUserData);
   // }, []);
 
-  const handleLogout = () => {
+  const handleLogout = () =>  {
     localStorage.removeItem("userData");
     setContextUserData([]);
     // localStorage.clear()
@@ -33,7 +33,7 @@ useEffect(()=>{
 
 setTimeout(()=>console.log("contextUserDataTest fromApp : ",contextUserData),1000)
 
-},[])
+},[contextUserData])
   
 
 

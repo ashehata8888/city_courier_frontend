@@ -1,12 +1,14 @@
 import React, { useContext,useState,useEffect } from 'react';
 import AppContext from '../context/AppContext';
 import Header from '../components/Header/Header';
-import Navbar from '../components/NavBar/NavBar';
+// import Navbar from '../components/NavBar/NavBar';
 
 
 function Layout({ children , handleLogout  }) {
  
-  const contextData = JSON.parse(useContext(AppContext));
+  // const contextData = JSON.parse(useContext(AppContext));
+  const contextData = useContext(AppContext)
+
     console.log("contextDatafromLayout",contextData)
 
     const contextUserData = localStorage.getItem("userData");
@@ -28,7 +30,7 @@ function Layout({ children , handleLogout  }) {
         setCurr(false)
        }
       
-      }
+      },[contextData?.userLogedIn, currentURL]
         )
 
         // contextData?.userLogedIn,currentURL

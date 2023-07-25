@@ -4,7 +4,8 @@ import { NavLink } from "react-router-dom";
 import "./NavBar.css";
 
 const Navbar = ({handleLogout,userDataPrivilege}) => {
-  const contextData = JSON.parse(useContext(AppContext));
+  // const contextData = JSON.parse(useContext(AppContext));
+  const contextData = useContext(AppContext)
 
   const [showNavbar, setShowNavbar] = useState(false);
   const [isSender, setIsSender] = useState(true);
