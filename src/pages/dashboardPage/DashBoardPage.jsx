@@ -71,7 +71,7 @@ export default function DashBoardPage() {
     if (storedUserData) {
       setStoredContextData(storedUserData);
     }
-  }, []);
+  });
 
 
 
