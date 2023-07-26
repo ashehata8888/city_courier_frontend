@@ -37,50 +37,39 @@ export default function DashBoardPage() {
   // }, []);
 
 
+
+  // Fetch tracking data whenever the component mounts or when contextData changes
   useEffect(() => {
-    // const userData = localStorage.getItem("userData");
-    // const userDataJS = JSON.parse(userData);
+    if (contextData.token) {
+      const fetchTrackingData = async () => {
+        try {
+          const TRACKING_URL =
+            "https://city-courier-webservices.onrender.com/api/tracking";
+          const response = await apiServices.fetchDataById(
+            TRACKING_URL,
+            contextData.id,
+            contextData.token
+          );
+          setTrackingData(response);
 
-    const TRACKING_URL =
-      "https://city-courier-webservices.onrender.com/api/tracking";
+          // Save the trackingData to localStorage when it changes
+          localStorage.setItem(
+            "trackingData",
+            JSON.stringify(response)
+          );
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchTrackingData();
+    }
+  }, [contextData]);
 
-    const fetchTrackingData = async () => {
-      try {
-
-
-        console.log("contextUserData from apiServices", contextData);
-
-        // const response = await apiServices.fetchData(TRACKING_URL);
-        const response = await apiServices.fetchDataById(
-          TRACKING_URL,
-          storedContextData?.id,
-          token
-        );
-
-        console.log("test Tracking data from Dashboard", response);
-
-        setTrackingData(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTrackingData();
-  }, [contextData,storedContextData, token]);
-
- 
-
+  // Retrieve the stored tracking data from localStorage during component initialization
   useEffect(() => {
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({ ...contextData, trackingData })
-    );
-  }, [trackingData, contextData]);
-
-  useEffect(() => {
-    // Get the stored user data from localStorage during component initialization
-    const storedUserData = JSON.parse(localStorage.getItem("userData"));
-    if (storedUserData) {
-      setTrackingData(storedUserData.trackingData);
+    const storedTrackingData = JSON.parse(localStorage.getItem("trackingData"));
+    if (storedTrackingData) {
+      setTrackingData(storedTrackingData);
     }
   }, []);
 
