@@ -137,7 +137,16 @@ export default function CreateNewRequestPage() {
     } catch (error) {
       console.error(error);
     }
+
+
   };
+
+  useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+    if (storedUserData) {
+      setStoredContextData(storedUserData);
+    }
+  }, []);
 
   return (
     <>

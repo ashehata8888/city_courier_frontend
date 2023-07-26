@@ -63,6 +63,13 @@ export default function TodoPage() {
     fetchTrackingData();
   }, [storedContextData, token]);
 
+  useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+    if (storedUserData) {
+      setStoredContextData(storedUserData);
+    }
+  }, []);
+
 
 
   const pickUpBtn = "Picked Up";

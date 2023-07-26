@@ -66,6 +66,13 @@ export default function DashBoardPage() {
     fetchTrackingData();
   }, [storedContextData, token]);
 
+  useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+    if (storedUserData) {
+      setStoredContextData(storedUserData);
+    }
+  }, []);
+
 
 
 
