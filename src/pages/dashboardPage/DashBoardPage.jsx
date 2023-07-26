@@ -35,7 +35,7 @@ export default function DashBoardPage() {
 
   //   return () => clearInterval(interval); // Clear the interval when the component unmounts
   // }, []);
-  
+
 
   useEffect(() => {
     // const userData = localStorage.getItem("userData");
@@ -53,7 +53,7 @@ export default function DashBoardPage() {
         // const response = await apiServices.fetchData(TRACKING_URL);
         const response = await apiServices.fetchDataById(
           TRACKING_URL,
-          storedContextData.id,
+          storedContextData?.id,
           token
         );
 
@@ -66,6 +66,38 @@ export default function DashBoardPage() {
     };
     fetchTrackingData();
   }, [storedContextData, token]);
+
+  useEffect(() => {
+    // const userData = localStorage.getItem("userData");
+    // const userDataJS = JSON.parse(userData);
+
+    const TRACKING_URL =
+      "https://city-courier-webservices.onrender.com/api/tracking";
+
+    const fetchTrackingData = async () => {
+      try {
+
+
+        console.log("contextUserData from apiServices", contextData);
+
+        // const response = await apiServices.fetchData(TRACKING_URL);
+        const response = await apiServices.fetchDataById(
+          TRACKING_URL,
+          storedContextData?.id,
+          token
+        );
+
+        console.log("test Tracking data from Dashboard", response);
+
+        setTrackingData(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTrackingData();
+  }, []);
+
+
 
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem("userData"));
