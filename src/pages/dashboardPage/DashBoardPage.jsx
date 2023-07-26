@@ -65,37 +65,25 @@ export default function DashBoardPage() {
       }
     };
     fetchTrackingData();
-  }, [storedContextData, token]);
+  }, [contextData,storedContextData, token]);
+
+ 
 
   useEffect(() => {
-    // const userData = localStorage.getItem("userData");
-    // const userDataJS = JSON.parse(userData);
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ ...contextData, trackingData })
+    );
+  }, [trackingData, contextData]);
 
-    const TRACKING_URL =
-      "https://city-courier-webservices.onrender.com/api/tracking";
-
-    const fetchTrackingData = async () => {
-      try {
-
-
-        console.log("contextUserData from apiServices", contextData);
-
-        // const response = await apiServices.fetchData(TRACKING_URL);
-        const response = await apiServices.fetchDataById(
-          TRACKING_URL,
-          storedContextData?.id,
-          token
-        );
-
-        console.log("test Tracking data from Dashboard", response);
-
-        setTrackingData(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchTrackingData();
+  useEffect(() => {
+    // Get the stored user data from localStorage during component initialization
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+    if (storedUserData) {
+      setTrackingData(storedUserData.trackingData);
+    }
   }, []);
+
 
 
 
