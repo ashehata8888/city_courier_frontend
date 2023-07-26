@@ -36,7 +36,10 @@ export default function DashBoardPage() {
   //   return () => clearInterval(interval); // Clear the interval when the component unmounts
   // }, []);
 
-
+  window.addEventListener("beforeunload", (event) => {
+    event.preventDefault();
+    event.returnValue = "Are you sure you want to leave this page?";
+  });
 
   // Fetch tracking data whenever the component mounts or when contextData changes
   useEffect(() => {
