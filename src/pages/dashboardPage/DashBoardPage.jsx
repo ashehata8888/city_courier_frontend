@@ -18,23 +18,24 @@ export default function DashBoardPage() {
     JSON.parse(localStorage.getItem("userData")) ||
     contextData
   );
-  const token = storedContextData.token;
+  const token = storedContextData?.token;
 
   // const contextData = useContext(AppContext);
   console.log("testToken", token);
 
   const userDataPrivilege = "sender";
 
-  JSON.parse(localStorage.getItem("contextData"))
+  // JSON.parse(localStorage.getItem("userData"))
 
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      window.location.reload();
-    }, 30000); // Reload every 30 seconds (0.5 minutes)
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     window.location.reload();
+  //   }, 30000); // Reload every 30 seconds (0.5 minutes)
 
-    return () => clearInterval(interval); // Clear the interval when the component unmounts
-  }, []);
+  //   return () => clearInterval(interval); // Clear the interval when the component unmounts
+  // }, []);
+  
 
   useEffect(() => {
     // const userData = localStorage.getItem("userData");
@@ -71,7 +72,7 @@ export default function DashBoardPage() {
     if (storedUserData) {
       setStoredContextData(storedUserData);
     }
-  });
+  },[]);
 
 
 
