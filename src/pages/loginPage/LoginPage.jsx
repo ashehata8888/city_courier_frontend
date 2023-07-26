@@ -44,7 +44,7 @@ const LoginPage = ({ parentCallBack }) => {
 
     try {
       const response = await apiServices.authUser(values);
-      const userPrivileges = await response.data.privilege;
+      const userPrivileges = await response?.data?.privilege;
 
       setTimeout(() => { console.log("TestuserResposefromLoginPage", response) }, 1000)
       parentCallBack(response.data)
