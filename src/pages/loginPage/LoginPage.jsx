@@ -52,19 +52,19 @@ const LoginPage = ({ parentCallBack }) => {
 
       // (async (response) => {
 
-      if (parseInt(response.data.id) < 1) {
+      if (parseInt(response?.data?.id) < 1) {
         setErrMsg("Login Failed");
       } else if (
-        parseInt(response.data.id) > 0 &&
+        parseInt(response?.data?.id) > 0 &&
         response.data.status == "active"
       ) {
         const userData = {
-          id: response.data.id,
+          id: response?.data?.id,
           privilege: userPrivileges,
-          addresponses: response.data.addresponses,
-          user_name: response.data.user_name,
-          user_mail: response.data.user_mail,
-          token: response.data.token,
+          adress: response?.data?.adress,
+          user_name: response?.data?.user_name,
+          user_mail: response?.data?.user_mail,
+          token: response?.data?.token,
           userLogedIn: true,
         };
 
@@ -85,8 +85,8 @@ const LoginPage = ({ parentCallBack }) => {
       }
       // });
 
-      const accessToken = response.data.token;
-      const userId = response.data.id;
+      const accessToken = response?.data?.token;
+      const userId = response?.data?.id;
       console.log(accessToken);
       // const userPrivileges = await response.data.privilege;
       console.log("userPriviliedges : ", JSON.stringify(userPrivileges));
